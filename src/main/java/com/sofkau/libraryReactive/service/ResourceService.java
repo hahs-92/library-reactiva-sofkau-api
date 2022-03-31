@@ -1,6 +1,6 @@
 package com.sofkau.libraryReactive.service;
 
-import com.sofkau.libraryReactive.collection.Resource;
+import com.sofkau.libraryReactive.model.Resource;
 import com.sofkau.libraryReactive.repository.IResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +29,23 @@ public class ResourceService {
         return repository.save(resource);
     }
 
-    public void deleteById(String id) {
-       repository.deleteById(id);
+    public Mono<Void> deleteById(String id) {
+        return repository.deleteById(id);
+    }
+
+    public Flux<Resource> getAllByQueries(String type, String theme) {
+        if(!type.isBlank() && !theme.isBlank()) {
+            return repository.findAllByQueries(type, theme);
+        }
+
+        if(!type.isBlank()) {
+            return repository.findResourcesByType(type);
+        }
+
+        if(!theme.isBlank()) {
+            return repository.findResourcesByTheme(theme);
+        }
+        return repository.findAll();
     }
 
 }

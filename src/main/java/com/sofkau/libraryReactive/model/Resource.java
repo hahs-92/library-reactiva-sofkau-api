@@ -1,53 +1,24 @@
-package com.sofkau.libraryReactive.dto;
+package com.sofkau.libraryReactive.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 
-public class ResourceDto {
+@Document
+public class Resource {
+    @Id
     private String id;
-    @NotBlank
-    @NotNull
     private String title;
-    @NotBlank
-    @NotNull
-    @Size(max = 50)
     private String description;
-    @NotBlank
-    @NotNull
     private String type;
-    @NotBlank
-    @NotNull
     private String theme;
-
     private LocalDate lastBorrowingDate;
     private Boolean isAvailable;
 
-    public ResourceDto(String title, String description, String type, String theme) {
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.theme = theme;
-    }
-
-    public ResourceDto(String id, String title, String description, String type, String theme, LocalDate lastBorrowingDate, Boolean isAvailable) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.theme = theme;
-        this.lastBorrowingDate = lastBorrowingDate;
-        this.isAvailable = isAvailable;
-    }
-
-    public ResourceDto(String id, String title, String description, String type, String theme, Boolean isAvailable) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.type = type;
-        this.theme = theme;
-        this.isAvailable = isAvailable;
+    public Resource() {
+        this.lastBorrowingDate = LocalDate.now();
+        this.isAvailable = true;
     }
 
     public String getId() {
